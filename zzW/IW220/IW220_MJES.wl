@@ -19,7 +19,7 @@ EXTERN ".\zzW\Z\DebugEjecuta.wl"
 IF Upper(gapA[1]) NOT IN("LOGIN","SKU","PAGO")  THEN gapA[1] = ""
 IF gapA[1] = "" THEN
   Error("X parametro CAPA aucente/erroneo en "+sCompilaTXT)
-  SWITCH {gestoyEn}..Plane
+  SWITCH {gestoyEn,indWindow}..Plane
     CASE gnCapaLogin: gapA[1] = "LOGIN"
     CASE gnCapaSku: gapA[1] = "SKU"
     CASE gnCapaPago: gapA[1] = "PAGO"
@@ -28,11 +28,11 @@ IF gapA[1] = "" THEN
 END
 
 IF gapA[1] = "LOGIN" THEN
-	{gestoyEn}..Plane = gnCapaLogin
+	{gestoyEn,indWindow}..Plane = gnCapaLogin
 	//GR_mjes..Visible = False //0219
 
 ELSE IF gapA[1] = "SKU"
-	{gestoyEn}..Plane = gnCapaSku
+	{gestoyEn,indWindow}..Plane = gnCapaSku
 	//GR_mjes..Visible = True
 	STC_1 = ""; STC_2 = ""; STC_3 = ""; STC_4 = ""
 
@@ -49,23 +49,22 @@ ELSE IF gapA[1] = "SKU"
 
     // ciclo infinito ??????????????
 		//ggsA = "IW_recibo"  // Widget (INI: [cfg]DASH=WIN_MAIN.DASH1)
-
-		//EXTERN ".\zzW\Z\IW_EXISTE.wl"
-    ggsA1 = INIRead("cfg","DASH","",ggsIni); bCpa1 = False
-    IF ggsA1 = "" THEN Error("X no definido DASH en ini..."); RETURN
-    IF ggsA = "" THEN Error("X no definido Widget..."); RETURN   // ggsA = "IW_grafica"
-
-    IF nDebug = Today() THEN Info("...Z\IW_EXISTE.wl","",ggsA1,ggsA)
-    IF ggsA <> "" AND ggsA1 <> "" THEN
-      FOR nCpa1 = 1 TO DashCount({ggsA1},toTotal)
-        IF {ggsA1}[nCpa1]..Name = ggsA THEN bCpa1 = True; BREAK
-      END
-    END
-		
+		////EXTERN ".\zzW\Z\IW_EXISTE.wl"
 		//IF bCpa1 THEN Ejecuta("MJES","SKU")
 	ELSE
 		ggsA = "IW_grafica"  // Widget (INI: [cfg]DASH=WIN_MAIN.DASH1)
-	  //EXTERN ".\zzW\Z\IW_EXISTE.wl"
+	  //EXTERN ".\zzW\Z\IW_EXIST.wl"
+    // Dentro de un 2do compilado no puede ir un EXTERN
+    IF ggsDash_Nombre = "" THEN ggsDash_Nombre = INIRead("cfg","DASH","",ggsIni); bCpa1 = False
+    IF ggsDash_Nombre = "" THEN Error("X no definido DASH en ini..."); RETURN
+    IF ggsA = "" THEN Error("X no definido Widget..."); RETURN   // ggsA = "IW_grafica"
+
+    IF ggsA <> "" AND ggsA1 <> "" THEN
+    	FOR nCpa1 = 1 TO DashCount({ggsDash_Nombre,indControl},toTotal)
+    		IF {ggsDash_Nombre,indControl}[nCpa1]..Name = ggsA THEN bCpa1 = True; BREAK
+    	END
+    END
+
 	  IF bCpa1 THEN
 	    ArrayDeleteAll(garrTit1); ArrayDeleteAll(garrVal11)
 	    ArrayAdd(garrTit1,"uno"); ArrayAdd(garrTit1,"dos"); ArrayAdd(garrTit1,"tres")

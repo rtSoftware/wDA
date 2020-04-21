@@ -13,6 +13,8 @@
 // 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
 
+ggsRespuesta = ""
+
 // Valida ...
 IF gapA[1] = "" OR gapA[1] = "?" THEN
   gsPCata = ""; Input("Cat�logo ?",gsPCata)
@@ -24,8 +26,8 @@ IF gsPCata = "" THEN Error("X Imposible continuar sin definir catalogo en >>>gsP
 IF nDebug = Today() THEN Info(gsPCata,"AEM="+ArrayCount(AEM),"AIN="+ArrayCount(AIN))
 
 //      B U S C A   -   F I N D
-gapA[1] = "" // respuesta (registro empleado/sku) // ???????????
 gsBloqueP = ""  // Asegura
+gapA[1] = "" // respuesta (registro empleado/sku)
 SWITCH gsPCata
   CASE "CLIE"
     Info(gsPCata+" ...Proceso BUSCA en construccion ..."); RETURN

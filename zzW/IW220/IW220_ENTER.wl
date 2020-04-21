@@ -22,7 +22,7 @@ EXTERN ".\zzW\Z\DebugEjecuta.wl"
 IF Upper(gapA[1]) NOT IN("LOGIN","SKU","PAGO")  THEN gapA[1] = ""
 IF gapA[1] = "" THEN
   Error("X parametro CAPA aucente/erroneo en "+sCompilaTXT)
-  SWITCH {gestoyEn}..Plane
+  SWITCH {gestoyEn,indWindow}..Plane
     CASE gnCapaLogin: gapA[1] = "LOGIN"
     CASE 5,gnCapaSku: gapA[1] = "SKU"
     CASE gnCapaPago: gapA[1] = "PAGO"
@@ -40,7 +40,8 @@ IF gapA[1] = "LOGIN" THEN
   // Comandos Administrador  >>>>> ,TEST <<<<<<
   IF Left(gapA[2],1) = "," THEN
     sCpa1 = Upper(Right(gapA[2],Length(gapA[2])-1)) // tarea en CALC
-    EXTERN ".\zzW\V\COMANDOS_Ejecuta.wl"
+    //EXTERN ".\zzW\V\COMANDOS_Ejecuta.wl"
+    Ejecuta("COMANDO",sCpa1)
     Ejecuta("ABRE",gapA[1]) // login
     //RETURN // sobra por ReturnToCapture(EDT_1) en XXX_ABRE
   END
@@ -49,9 +50,13 @@ IF gapA[1] = "LOGIN" THEN
   IF gapA[2] = "" OR gapA[3] = "" THEN Error("200218731"); RETURN
   IF nDebug = Today() THEN Info("busca...","",sCpa1)
   Ejecuta("FIND",sCpa1) // LOGIN;usuario;clave
-  IF nDebug = Today() THEN Info("empleado...","",sCpa1) // Code,Descricion,Correo
+  ggsSoy = "" // Asegura
 
-  IF sCpa1 <> "" THEN Ejecuta("FORM","LOGIN;"+sCpa1)  // ggsSoy, INI: nombre, correo...
+  IF nDebug = Today() THEN Info("empleado...","",ggsRespuesta) // Code,Descricion,Correo
+  IF ggsRespuesta <> "" THEN
+    // Valida respuesta ...
+    IF ggsRespuesta <> "X" THEN Ejecuta("FORM","LOGIN;"+ggsRespuesta)  // --> ggsSoy, INI: nombre, correo...
+  END
   IF ggsSoy <> "" THEN
     Ejecuta("ABRE","SKU;Bienvenido "+ggsSoyNombre+";;;")
   ELSE
@@ -67,7 +72,12 @@ ELSE IF gapA[1] = "SKU"
   // Busca sku escaneado ... //0219
   IF gapA[2] = "" THEN Error("200218733"); RETURN
   Ejecuta("FIND",sCpa1) // SKU;7501234561234
-  IF nDebug = Today() THEN Info("producto...","",sCpa1) // Sku,Descripcion,Precio...
+
+  IF nDebug = Today() THEN Info("producto...","",ggsRespuesta) // Sku,Descripcion,Precio...
+  IF ggsRespuesta <> "" THEN
+    // Valida respuesta ... (registro para formar recibo)
+    //IF ggsRespuesta <> "X" THEN Error("Codigo inexistente...")
+  END
 
   Ejecuta("ABRE","SKU;Escan SKU...")  //0219
 ELSE

@@ -2,12 +2,12 @@
 
 
 
-ggsA1 = INIRead("cfg","DASH","",ggsIni); bCpa1 = False
-IF ggsA1 = "" THEN
-	Input("Nombre control: DASH ?",ggsA1)
-	IF ggsA1 = "" THEN
+IF ggsDash_Nombre = "" THEN ggsDash_Nombre = INIRead("cfg","DASH","",ggsIni); bCpa1 = False
+IF ggsDash_Nombre = "" THEN
+	Input("Nombre control: DASH ?",ggsDash_Nombre)
+	IF ggsDash_Nombre = "" THEN
 		Error("X no definido DASH en ini..."); RETURN
 	ELSE
-		INIWrite("cfg","DASH",ggsA1,ggsIni)
+		INIWrite("cfg","DASH",ggsDash_Nombre,ggsIni)
 	END
 END

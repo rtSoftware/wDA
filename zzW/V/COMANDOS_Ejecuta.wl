@@ -9,13 +9,13 @@ SWITCH sCpa1
 
     //Widget
     sCpa1 = "WIN_R.DASH_MAIN" // <<-----------------------
-    FOR nCpa1 = 1 TO DashCount({sCpa1},toTotal)
-      IF {sCpa1}[nCpa1]..Name = "IW_grafica" THEN
+    FOR nCpa1 = 1 TO DashCount({sCpa1,indControl},toTotal)
+      IF {sCpa1,indControl}[nCpa1]..Name = "IW_grafica" THEN
         // E X I S T E
 
         // Muevo a otra posicion en DASH ...
-        DashMoveWidget({sCpa1},nCpa1,2,4,dashNoReorganization)
-        DashResizeWidget({sCpa1},4 ,4,1)
+        DashMoveWidget({sCpa1,indControl},nCpa1,2,4,dashNoReorganization)
+        DashResizeWidget({sCpa1,indControl},4 ,4,1)
 
         // Genero serie en forma aleatoria ...
         garrTit2 = ["L","M","M","J","V","S","D"] 	// Titulo series
@@ -58,23 +58,24 @@ SWITCH sCpa1
     //IW_recibo.Ejecuta("RBO_ABRE","LOGIN")
     //IW_captura..Visible = False
   CASE ~~"TABLETA" //0221
-    IF COMBO_productos..Visible = True THEN
-      INIWrite("cfg","Tableta_YN","N",ggsIni)
-      COMBO_productos..Visible = False
-      Info("Modo tableta DES-ACTIVADO")
-    ELSE
-      // Verifica contenido
-      IF ListCount(COMBO_productos) THEN
-      	FOR nCpa1 = 1 TO ArrayCount(garDi)
-      		ListAdd(COMBO_productos,garDi[nCpa1])
-      	END
-      	ListDisplay(COMBO_productos)
-      END
-      // Graba en configuracion ...
-      INIWrite("cfg","Tableta_YN","Y",ggsIni)
-      COMBO_productos..Visible = True
-      Info("Modo tableta ACTIVADO")
-    END
+Info("en remodelacion modo: TABLETA")  
+//    IF COMBO_productos..Visible = True THEN
+//      INIWrite("cfg","Tableta_YN","N",ggsIni)
+//      COMBO_productos..Visible = False
+//      Info("Modo tableta DES-ACTIVADO")
+//    ELSE
+//      // Verifica contenido
+//      IF ListCount(COMBO_productos) THEN
+//      	FOR nCpa1 = 1 TO ArrayCount(garDi)
+//      		ListAdd(COMBO_productos,garDi[nCpa1])
+//      	END
+//      	ListDisplay(COMBO_productos)
+//      END
+//      // Graba en configuracion ...
+//      INIWrite("cfg","Tableta_YN","Y",ggsIni)
+//      COMBO_productos..Visible = True
+//      Info("Modo tableta ACTIVADO")
+//    END
 
   CASE "TEST"
     info(gapA[1],ArrayCount(gapA),gapA[1],gapA[2],gapA[3],gapA[4]); RETURN

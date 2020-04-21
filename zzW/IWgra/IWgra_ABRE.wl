@@ -8,11 +8,10 @@
 // Flujo:
 //
 /////////////////////////////////////////////////////////////////////////
-
-
-
+// nDebug = Today()
+// 		SI: Ejecuta("gapE[1]","*gapA[1]")
+// 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
-//#
 
 // FOR nCpa1 = 1 TO DashCount(WIN_MAIN.DASH_1,toTotal)
 // 	IF WIN_MAIN.DASH_1[nCpa1]..Name = "IW_grafica" THEN

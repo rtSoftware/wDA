@@ -154,7 +154,7 @@ ggsEst,ggsRef,ggsSeq is string          // Estacion   REFerencia
 ggbYe,ggbMe,ggbWe is boolean            // Year Mes Week
 //ggarrEMPL is array of string //191026 movido a varios
 ggarrCorreo is array of ANSI string //200220
-
+ggsRespuesta is string
 
 
             // C L A S I C O S //
@@ -190,6 +190,7 @@ ggbSimula is boolean  //191106
 ggarrCLIE,ggarrEMPL,ggarrINVE,ggarrPROV is array of string  //191108
 ggarrCLIEc,ggarrEMPLc,ggarrINVEc,ggarrPROVc is array of string  //191205
 ggbFlash_a,ggbFlash_c,ggbFlash_m,ggbFlash_n is boolean  //191224 200116
+ggsDash_Nombre is string
 
 // IW_grafica
 garrTit1,garrTit2,garrTit3,garrTit4 is array of ANSI string

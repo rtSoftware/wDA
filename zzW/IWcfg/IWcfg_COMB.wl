@@ -25,11 +25,11 @@ EXTERN ".\zzW\Z\DebugEjecuta.wl"
 {gestoyEn,indWindow}..Plane = 5   // Asegura si no entra por ABRE
 sCpa1 = "COMBO_1"; bCpa1 = False  // Limpia control despues de seleccion
 // -------------------------------------------------------------------------
-nN is int
 
 // F O R M A
 IF NOT ListCount({sCpa1,indControl}) THEN
   IF nDebug = Today() THEN Info("FORMA...","(num de param)gapA="+ArrayCount(gapA))
+  nN is int
   FOR nN = 1 _TO_ ArrayCount(gapA)
     IF Left(Upper(gapA[nN]),3) IN ("CBO","COM") THEN CONTINUE
     IF Left(gapA[nN],1) = "*" THEN gapA[nN] = Right(gapA[nN],Length(gapA[nN])-1)
@@ -94,14 +94,7 @@ ggsA = {sCpa1,indControl}[{sCpa1,indControl}]; ToClipboard(ggsA); gapA[1] = ggsA
 IF bCpa1 THEN ListDeleteAll({sCpa1,indControl})  // Limpia contenido del control
 
 // -------------------- particular --------------------
-sCpa2 = INIRead("cfg","DASH","",ggsIni)
-IF sCpa2 = "" THEN
-  // Widget (INI: [cfg]DASH=WIN_MAIN.DASH1)
-  sCpa2 = ""; Input("Nombre del VENTANA.DASH ?",sCpa2)
-  IF sCpa2 = "" THEN Error("Imposible continuar sin nombre Ventana.Dash"); RETURN
-
-  INIWrite("cfg","DASH",sCpa2,ggsIni)
-END
+IF ggsDash_Nombre = "" THEN ggsDash_Nombre = INIRead("cfg","DASH","",ggsIni)
 // -------------------- particular --------------------
 
 // Funcionalidad extendida (solo codigo, imposible en modo parametros)
@@ -112,34 +105,34 @@ SWITCH ggsA
 // Escriba aqui CODIGO para formar Lista si no invoca con PARAMETROS...
 //                        Ejecuta("CBOS")
 ////////////////////////////////////////////////////////////////////////
-  CASE "+Browser": nCpa1 = DashAddWidget({sCpa2},IW_browser,"IW_browser")
+  CASE "+Browser": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_browser,"IW_browser")
   CASE "-Browser": sCpa3 = "IW_browser"
 
-  CASE "+Calendario": nCpa1 = DashAddWidget({sCpa2},IW_calendario,"IW_calendario")
+  CASE "+Calendario": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_calendario,"IW_calendario")
   CASE "-Calendario": sCpa3 = "IW_calendario"
 
-  CASE "+Captura": nCpa1 = DashAddWidget({sCpa2},IW_captura,"IW_captura")
+  CASE "+Captura": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_captura,"IW_captura")
   CASE "-Captura": sCpa3 = "IW_captura"
 
-  CASE "+Configura": nCpa1 = DashAddWidget({sCpa2},IW_cfg,"IW_cfg")
+  CASE "+Configura": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_cfg,"IW_cfg")
   CASE "-Configura": sCpa3 = "IW_cfg"
 
-  CASE "+Escan": nCpa1 = DashAddWidget({sCpa2},IW_escan,"IW_escan","ABRE","LOGIN")
+  CASE "+Escan": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_escan,"IW_escan","ABRE","LOGIN")
   CASE "-Escan": sCpa3 = "IW_escan"
 
-  CASE "+Grafica": nCpa1 = DashAddWidget({sCpa2},IW_grafica,"IW_grafica")
+  CASE "+Grafica": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_grafica,"IW_grafica")
   CASE "-Grafica": sCpa3 = "IW_grafica"
 
-  CASE "+Internet": nCpa1 = DashAddWidget({sCpa2},IW_browser,"IW_browser")
+  CASE "+Internet": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_browser,"IW_browser")
   CASE "-Internet": sCpa3 = "IW_browser"
 
-  CASE "+LogIN": nCpa1 = DashAddWidget({sCpa2},IW_login,"IW_login")
+  CASE "+LogIN": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_login,"IW_login")
   CASE "-LogIN": sCpa3 = "IW_login"
 
-  CASE "+Recibo": nCpa1 = DashAddWidget({sCpa2},IW_recibo,"IW_recibo","RBO_ABRE","LOGIN")
+  CASE "+Recibo": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_recibo,"IW_recibo","RBO_ABRE","LOGIN")
   CASE "-Recibo": sCpa3 = "IW_recibo"
 
-  CASE "+Titula": nCpa1 = DashAddWidget({sCpa2},IW_titulosEdita,"IW_titulosEdita")
+  CASE "+Titula": nCpa1 = DashAddWidget({ggsDash_Nombre,indControl},IW_titulosEdita,"IW_titulosEdita")
   CASE "-Titula": sCpa3 = "IW_titulosEdita"
 
 
@@ -150,12 +143,12 @@ END
 IF Left(ggsA,1) = "-" THEN
   // Quita ..
   IF sCpa3 = "" THEN Error("Algo anda mal en la vadilaci�n de opciones "+sCompilaTXT+" (3131147)")
-  FOR nN = 1 TO DashCount({sCpa2},toTotal)
-    IF {sCpa2}[nN]..Name = sCpa3 THEN DashDelete({sCpa2},nN); BREAK
+  FOR nN = 1 TO DashCount({ggsDash_Nombre,indControl},toTotal)
+    IF {ggsDash_Nombre,indControl}[nN]..Name = sCpa3 THEN DashDelete({ggsDash_Nombre,indControl},nN); BREAK
   END
 ELSE
   // Pon ...
-  {sCpa2}[nCpa1]..Visible = True
+  {ggsDash_Nombre,indControl}[nCpa1]..Visible = True
 END
 // -------------------- particular --------------------
 

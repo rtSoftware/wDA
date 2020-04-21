@@ -10,8 +10,7 @@
 //            BTN_C --> ABRE  (cancela)
 //          MJES --> IWxxx_ZALI   (muy variado)
 /////////////////////////////////////////////////////////////////////////
-
-
-
+// nDebug = Today()
+// 		SI: Ejecuta("gapE[1]","*gapA[1]")
+// 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
-//#

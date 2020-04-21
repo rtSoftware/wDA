@@ -2,9 +2,10 @@
 
 
 
-
+// nDebug = Today()
+// 		SI: Ejecuta("gapE[1]","*gapA[1]")
+// 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
-//#
 
 SWITCH MZ_4 // gapE[1]
 	CASE 1
@@ -24,7 +25,9 @@ SWITCH MZ_4 // gapE[1]
 				ArrayAdd(garrPagoRef,"")
 				ArrayAdd(garrPagoMoneda,"EF")
 				ArrayAdd(garrPagoVal,Val(MZ_4.STC_Static1..Caption))
+				MZ_4.STC_Static1..Caption = ""	//420
 			END
+
 
 			Ejecuta("ZALI","PAGO") // Aplica el pago ...
 		END

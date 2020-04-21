@@ -34,11 +34,11 @@ SWITCH gapA[1]
 
   CASE ~~"COMB"
 		gnCapa = 5
-		EXTERN ".\zzW\Z\param_COMB.wl"
+		Ejecuta(gapA[1])  //EXTERN ".\zzW\Z\param_COMB.wl"
   CASE ~~"CHEC"
 		gnCapa = 7
 		IF ArrayCount(gapA) < 11 THEN CBOX_1..Height = 350 // lo reduce a la mitad ...
-		EXTERN ".\zzW\Z\param_CHEC.wl"
+		Ejecuta(gapA[1])  //EXTERN ".\zzW\Z\param_CHEC.wl"
 	CASE ~~"EDT_Text"
 		{gestoyEn,indWindow}..Plane = 4 // capa
 		//IF gapA[2] <> "" THEN EDT_Text..Value = fLoadText(gapA[2])
@@ -75,7 +75,7 @@ SWITCH gapA[1]
   CASE ~~"RADI"
 		gnCapa = 6
 		IF ArrayCount(gapA) < 11 THEN RADIO_1..Height = 350 // lo reduce a la mitad ...
-		EXTERN ".\zzW\Z\param_RADI.wl"
+		Ejecuta(gapA[1])  //EXTERN ".\zzW\Z\param_RADI.wl"
 
 	CASE ~~"TEST"
 		sSelec is string = ggsA	// regresa seleccion de varias opciones en SWITCH gapA[1]...

@@ -18,7 +18,7 @@ EXTERN ".\zzW\Z\DebugEjecuta.wl"
 IF Upper(gapA[1]) NOT IN("LOGIN","SKU","PAGO")  THEN gapA[1] = ""
 IF gapA[1] = "" THEN
   Error("X (2191931) parametro CAPA aucente/erroneo en "+sCompilaTXT)
-  SWITCH {gestoyEn}..Plane
+  SWITCH {gestoyEn,indWindow}..Plane
     CASE gnCapaLogin: gapA[1] = "LOGIN"
     CASE gnCapaSku: gapA[1] = "SKU"
     CASE gnCapaPago: gapA[1] = "PAGO"

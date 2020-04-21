@@ -80,10 +80,12 @@ SWITCH gapA[1]
 	CASE "BTN_11"
 		// +Columnas DASH
 
-		EXTERN ".\zzW\Z\DASH_Lee.wl"  // DASH --> {ggsA1}
-		ggnX = {ggsA1}..Height;  ggnY = {ggsA1}..Width
-		Info("ggnX="+ggnX,"ggnY="+ggnY,"",{ggsA1}..NumberColumn)
-		IF {ggsA1}..NumberColumn > 0 THEN {ggsA1}..NumberColumn++
+		//EXTERN ".\zzW\Z\DASH_Lee.wl"  // DASH --> {ggsA1}
+    IF ggsDash_Nombre = "" THEN ggsDash_Nombre = INIRead("cfg","DASH","NULL",ggsIni)
+    IF ggsDash_Nombre = "NULL" THEN Error("X no definido nombre DASH"); EndProgram()
+		ggnX = {ggsDash_Nombre,indControl}..Height;  ggnY = {ggsDash_Nombre,indControl}..Width
+		Info("ggnX="+ggnX,"ggnY="+ggnY,"",{ggsDash_Nombre,indControl}..NumberColumn)
+		IF {ggsA1}..NumberColumn > 0 THEN {ggsDash_Nombre,indControl}..NumberColumn++
 
 		////info("columnas="+WIN_Main.DASH_Main..NumberColumn)
 		//if yesno("Incremento ?") THEN
@@ -104,25 +106,27 @@ SWITCH gapA[1]
 	CASE "BTN_12"
 		// -Columnas DASH
 
-		EXTERN ".\zzW\Z\DASH_Lee.wl"  // DASH --> {ggsA1}
-		IF {ggsA1}..NumberColumn > 0 THEN {ggsA1}..NumberColumn--
+    //EXTERN ".\zzW\Z\DASH_Lee.wl"  // DASH --> {ggsA1}
+    IF ggsDash_Nombre = "" THEN ggsDash_Nombre = INIRead("cfg","DASH","NULL",ggsIni)
+    IF ggsDash_Nombre = "NULL" THEN Error("X no definido nombre DASH"); EndProgram()
+		IF {ggsDash_Nombre,indControl}..NumberColumn > 0 THEN {ggsDash_Nombre,indControl}..NumberColumn--
 
 
-		//ggsa = WIN_R.DASH_Main
-		//ggnX = {ggsa}..Height;  ggny = {ggsA}..Width
+		//ggsDash_Nombre = WIN_R.DASH_Main
+		//ggnX = {ggsDash_Nombre,indControl}..Height;  ggny = {ggsDash_Nombre,indControl}..Width
 		//	//Info("columnas="+WIN_Main.DASH_Main..NumberColumn)
 		//if yesno("Incremento ?") THEN
-		//	IF {ggsA}..NumberColumn = 3 THEN
-		//		{ggsA}..Height = ggnX + 200
+		//	IF {ggsDash_Nombre,indControl}..NumberColumn = 3 THEN
+		//		{ggsDash_Nombre,indControl}..Height = ggnX + 200
 		//		//WIN_Main.DASH_Main..Width = ggny + 640
-		//		{ggsA}..NumberColumn = 5
-		//	ELSE if	{ggsA}..NumberColumn = 4
-		//		{ggsA}..NumberColumn = 5
+		//		{ggsDash_Nombre,indControl}..NumberColumn = 5
+		//	ELSE if	{ggsDash_Nombre,indControl}..NumberColumn = 4
+		//		{ggsDash_Nombre,indControl}..NumberColumn = 5
 		//	END
 		//ELSE
-		//	{ggsA}..NumberColumn = 3
-		//	{ggsA}..Height = WIN_r.DASH_Main..InitialHeight
-		//	{ggsA}..Width = WIN_r.DASH_Main..InitialWidth
+		//	{ggsDash_Nombre,indControl}..NumberColumn = 3
+		//	{ggsDash_Nombre,indControl}..Height = WIN_r.DASH_Main..InitialHeight
+		//	{ggsDash_Nombre,indControl}..Width = WIN_r.DASH_Main..InitialWidth
 		//
 		//END
 
@@ -137,9 +141,11 @@ SWITCH gapA[1]
 	CASE ~~"BTN_MENOS": IF IW_cfg..Plane > 1 THEN IW_cfg..Plane--
 	CASE "BTN_eliminaW"
 		// auto eliminate
-		EXTERN ".\zzW\Z\DASH_Lee.wl"  // DASH --> {ggsA1}
-		FOR i = 1 TO DashCount({ggsA1},toTotal)
-			IF {ggsA1}[i]..Name = "IW_cfg" THEN DashDelete({ggsA1},i); BREAK
+    //EXTERN ".\zzW\Z\DASH_Lee.wl"  // DASH --> {ggsA1}
+    IF ggsDash_Nombre = "" THEN ggsDash_Nombre = INIRead("cfg","DASH","NULL",ggsIni)
+    IF ggsDash_Nombre = "NULL" THEN Error("X no definido nombre DASH"); EndProgram()
+		FOR i = 1 TO DashCount({ggsDash_Nombre,indControl},toTotal)
+			IF {ggsDash_Nombre,indControl}[i]..Name = "IW_cfg" THEN DashDelete({ggsDash_Nombre,indControl},i); BREAK
 		END
 
 

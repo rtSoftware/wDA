@@ -10,22 +10,22 @@
 //            BTN_C --> ABRE  (cancela)
 //          MJES --> IWxxx_ZALI   (muy variado)
 /////////////////////////////////////////////////////////////////////////
-
-
+// nDebug = Today()
+// 		SI: Ejecuta("gapE[1]","*gapA[1]")
+// 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
-//#
 
 //IF gapA[1] = "" <-- correcto... ggsSoy controla el flujo
 
 // Asegura //0219
-IF gapA[1] = "" THEN gapA[1] = "LOGIN"; {gestoyEn}..Plane = gnCapaLogin
-IF ggsSoy = "" THEN gapA[1] = "LOGIN"; {gestoyEn}..Plane = gnCapaLogin
+IF gapA[1] = "" THEN gapA[1] = "LOGIN"; {gestoyEn,indWindow}..Plane = gnCapaLogin
+IF ggsSoy = "" THEN gapA[1] = "LOGIN"; {gestoyEn,indWindow}..Plane = gnCapaLogin
 
 // Valida ...
 IF Upper(gapA[1]) NOT IN("LOGIN","SKU","PAGO")  THEN gapA[1] = ""
 IF gapA[1] = "" THEN
   Error("X parametro CAPA aucente/erroneo en "+sCompilaTXT)
-  SWITCH {gestoyEn}..Plane
+  SWITCH {gestoyEn,indWindow}..Plane
     CASE gnCapaLogin: gapA[1] = "LOGIN"
     CASE 5,gnCapaSku: gapA[1] = "SKU"
     CASE gnCapaPago: gapA[1] = "PAGO"
@@ -65,7 +65,7 @@ IF Upper(gapA[1]) = "LOGIN" THEN  /////////////////////////////////////////////
 ELSE IF Upper(gapA[1]) = "PAGO" /////////////////////////////////////////////
   //0219
   IF gnCapaPago > 0 THEN
-    {gestoyEn}..Plane = gnCapaPago
+    {gestoyEn,indWindow}..Plane = gnCapaPago
     Ejecuta("CALC")
     Ejecuta("MJES_PAGO")
   ELSE

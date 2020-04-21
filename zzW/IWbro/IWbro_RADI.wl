@@ -38,12 +38,12 @@ IF {sCpa1,indControl}[1]..Caption = "Option 1" THEN
   IF ArrayCount(gapA) > 0 THEN
     // Forma 1er elemento
     {sCpa1,indControl}[1]..Caption = "_nada"
-    nN is int
-    FOR nN = 1 _TO_ ArrayCount(gapA)
-      IF Left(Upper(gapA[nN]),3) = "RAD" THEN CONTINUE
-      IF Left(gapA[nN],1) = "*" THEN gapA[nN] = Right(gapA[nN],Length(gapA[nN])-1)
-      IF Contains(gapA[nN],"~") THEN CONTINUE // param CONCLUYE
-      RadioButtonAdd({sCpa1,indControl},gapA[nN])
+    nNR is int
+    FOR nNR = 1 _TO_ ArrayCount(gapA)
+      IF Left(Upper(gapA[nNR]),3) = "RAD" THEN CONTINUE
+      IF Left(gapA[nNR],1) = "*" THEN gapA[nNR] = Right(gapA[nNR],Length(gapA[nNR])-1)
+      IF Contains(gapA[nNR],"~") THEN CONTINUE // param CONCLUYE
+      RadioButtonAdd({sCpa1,indControl},gapA[nNR])
     END
   ELSE
     ////////////////////////////////////////////////////////////////////////

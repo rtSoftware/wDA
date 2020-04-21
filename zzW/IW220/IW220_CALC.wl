@@ -2,23 +2,30 @@
 
 
 
-
+/////////////////////////////////////////////////////////////////////////
+// Flujo:   BTN_<0..1> --> EDT_Captura / EDT_Usuario (ciclo)
+//            BTN_E --> ENTER --> FIND --> FORM (INI)     // login
+//            BTN_E --> ENTER --> FIND --> FORM (Recibo)  // sku
+//            BTN_P --> ENTER --> FIND --> FORM (kata)    // pago
+//            BTN_C --> ABRE  (cancela)
+//          MJES --> IWxxx_ZALI   (muy variado)
+/////////////////////////////////////////////////////////////////////////
+// nDebug = Today()
+// 		SI: Ejecuta("gapE[1]","*gapA[1]")
+// 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
-//#
 
 gnUniTot = 0; gcyImporte = 0; gcyDescTot = 0
-IF HNbRec(Recibo) > 0 THEN
-	FOR EACH Recibo
-		Recibo.extendido = Recibo.uni * Recibo.precio
-		IF NOT HModify(Recibo,hRecNumCurrent) THEN
-			Error(""+HErrorInfo())
-		ELSE
-			gcyImporte += Recibo.extendido
-			gnUniTot += Recibo.uni
-			gcyDescTot += Recibo.descuento
-		END
+HReadFirst(Recibo)
+WHILE HOut(Recibo) = False
+	IF NOT HModify(Recibo,hRecNumCurrent) THEN
+		Error(""+HErrorInfo())
+	ELSE
+		gcyImporte += Recibo.extendido
+		gnUniTot += Recibo.uni
+		gcyDescTot += Recibo.descuento
 	END
-	Ejecuta("LOOPER_RECIBO") // vacio en Ejecuta(gapE[1],gapA[1],pN) cuando no aplica 
+
+	HReadNext(Recibo)
 END
-
-
+Ejecuta("LOOPER_RECIBO") // vacio en Ejecuta(gapE[1],gapA[1],pN) cuando no aplica

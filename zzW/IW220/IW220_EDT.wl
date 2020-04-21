@@ -32,11 +32,12 @@ IF nDebug = Today() THEN Info("sCTL="+sCTL,"gapA[1]="+gapA[1],"","Caption="+sCpa
 
 //IF KeyPressed(gnKey) OR KeyPressed(gnKey1) THEN
 
-	IF {gestoyEn}..Plane = gnCapaLogin THEN
+	IF {gestoyEn,indWindow}..Plane = gnCapaLogin THEN
 		//0221
 		IF Left(EDT_Usuario,1) = "," THEN
 	    sCpa1 = Upper(Right(EDT_Usuario,Length(EDT_Usuario)-1))
-	    EXTERN ".\zzW\V\COMANDOS_Ejecuta.wl"
+	    //EXTERN ".\zzW\V\COMANDOS_Ejecuta.wl"
+			Ejecuta("COMANDO",sCpa1)
 	    Ejecuta("ABRE",gapA[1]) // login
 	    //RETURN // sobra por ReturnToCapture(EDT_1) en XXX_ABRE
 	  END
@@ -50,7 +51,7 @@ IF nDebug = Today() THEN Info("sCTL="+sCTL,"gapA[1]="+gapA[1],"","Caption="+sCpa
 			IF EDT_Pin = "" THEN ReturnToCapture(EDT_Pin)
 			Ejecuta("ENTER","LOGIN;"+EDT_Usuario+";"+EDT_Pin)	//usuario.clave
 		END
-	ELSE IF {gestoyEn}..Plane = gnCapaSku
+	ELSE IF {gestoyEn,indWindow}..Plane = gnCapaSku
 		// Tarea , SKU;7501234561234;2
 		Ejecuta("ENTER","SKU;"+Replace(MySelf..Value,".",";"))	//producto.cantidad
 	END

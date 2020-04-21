@@ -2,6 +2,10 @@
 
 //Ejecuta("CBOX")
 
+// nDebug = Today()
+// 		SI: Ejecuta("gapE[1]","*gapA[1]")
+// 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
+EXTERN ".\zzW\Z\DebugEjecuta.wl"
 
 // F O R M A
 IF NOT ListCount(COMBO_1) THEN

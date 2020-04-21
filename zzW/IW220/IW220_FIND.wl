@@ -14,6 +14,8 @@
 // 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
 
+ggsRespuesta = ""
+
 // Valida ...
 IF Upper(gapA[1]) NOT IN("LOGIN","SKU")  THEN gapA[1] = ""
 IF gapA[1] = "" THEN
@@ -26,7 +28,6 @@ IF gapA[1] = "" THEN
   END
 END
 
-gapA[1] = "" // respuesta (registro empleado/sku)
 IF gapA[2] = "" THEN Error("X parametro aucente en "+sCompilaTXT)
 
 IF Upper(gapA[1]) = "SKU" THEN
@@ -34,7 +35,7 @@ IF Upper(gapA[1]) = "SKU" THEN
 	ggnCant = Val(gapA[3]); IF ggnCant = 0 THEN ggnCant = 1
 	gapA[3] = "" // Higiene
 
-	gapA[2] = Right("000000000000"+gapA[2],13)	//; gapA[1] = "" // respuesta
+	gapA[2] = Right("000000000000"+gapA[2],13)
 	IF nDebug = Today() THEN Info(gapE[1]+"...","Sku="+gapA[2],"AIN="+ArrayCount(AIN))
 
 	// Cantidad inplicita en captura
@@ -44,7 +45,7 @@ IF Upper(gapA[1]) = "SKU" THEN
 	IF ArrayCount(AIN) > 0 THEN
 		nCpa1 = ArraySeek(ggarrINVEc,asLinear,Right("000000000000"+gapA[2],13))
 		IF nCpa1 > 0 THEN
-			gapA[1] = ";"+AIN[nCpa1]:cata+";"+AIN[nCpa1]:codigo+";"+AIN[nCpa1]:descripcion+";"+...
+			ggsRespuesta = ";"+AIN[nCpa1]:cata+";"+AIN[nCpa1]:codigo+";"+AIN[nCpa1]:descripcion+";"+...
 			AIN[nCpa1]:val1+";"+AIN[nCpa1]:val2+";"+AIN[nCpa1]:flag+";"+...
 			AIN[nCpa1]:Flagc20+";"+AIN[nCpa1]:nota+";"+AIN[nCpa1]:b+";"+AIN[nCpa1]:c+";"+...
 			AIN[nCpa1]:d+";"+AIN[nCpa1]:f+";"+AIN[nCpa1]:g+";"+AIN[nCpa1]:m+";"+...
@@ -55,24 +56,24 @@ IF Upper(gapA[1]) = "SKU" THEN
 		END
 	END
 
-	IF gapA[1] = "" THEN
+	IF ggsRespuesta = "" THEN
 		// Lee catï¿½logo(tabla fisica) ...
 		// Vector AIN no esta actualizado ...
 		Ejecuta("E",";INVE;"+gapA[2]) // prEsenta
 		IF gsBloqueP <> "" THEN
-				sa is array of ANSI string
-				StringToArray(gsBloqueP,sa,";")
+				fd is array of ANSI string
+				StringToArray(gsBloqueP,fd,";")
 
-				IF Right("000000000000"+sa[3],13) = gapA[2] THEN
-					gapA[1] = gsBloqueP
-					IF sa[17] = "20000101" THEN Info("Producto desactivo ...") ;RETURN
-					IF sa[5] <= 0 THEN sa[5] = 1000
+				IF Right("000000000000"+fd[3],13) = gapA[2] THEN
+					ggsRespuesta = gsBloqueP
+					IF fd[17] = "20000101" THEN Info("Producto desactivo ...") ;RETURN
+					IF fd[5] <= 0 THEN fd[5] = 1000
 
 					HReset(Recibo)
-					Recibo.mesa = 999 ;Recibo.codigo = gapA[2] ;Recibo.descripcion = sa[4]
+					Recibo.mesa = 999 ;Recibo.codigo = gapA[2] ;Recibo.descripcion = fd[4]
 					Recibo.uni = ggnCant ;Recibo.descuento = 0 ;Recibo.tax1 = 0 ;Recibo.tax2 = 0
-					Recibo.precio = sa[5] ;Recibo.extendido = Recibo.precio*ggnCant
-					Recibo.costo = sa[6] ;Recibo.caducidad = sa[13] ;Recibo.cagoria = sa[11]
+					Recibo.precio = fd[5] ;Recibo.extendido = Recibo.precio*ggnCant
+					Recibo.costo = fd[6] ;Recibo.caducidad = fd[13] ;Recibo.cagoria = fd[11]
 					Recibo.imagen = fCurrentDir()+[fSep]+"IMAGENES"+[fSep]+gapA[2]+".jpg"
 					IF NOT HAdd(Recibo) THEN ggsLog = "XA Recibo(escann_SKU)"+ErrorInfo() ELSE ggsLog = "OK escann_SKU"
 
@@ -104,13 +105,14 @@ ELSE IF Upper(gapA[1]) = "LOGIN"
 	// login
 
 	IF nDebug = Today() THEN Info(gapE[1]+"...","U="+gapA[2],"P="+gapA[3],"Teclado="+bCpa1,"","AEM="+ArrayCount(AEM))
+
 	IF ArrayCount(AEM) > 0 THEN
-		// Lee catï¿½logo(super arreglo) ...
+		// Lee catálogo(super arreglo) ...
 		FOR nCpa1 = 1 TO ArrayCount(AEM)
       //IF nDebug = Today() THEN Info(AEM[nCpa1]:codigo , gapA[2])
 			IF AEM[nCpa1]:codigo = gapA[2] THEN
 				// AEM[nCpa1]:Flagc20 <-- gapA[3]  listo para actualizar pass si hay que hacerlo
-				gapA[1] = ";EMPL;"+AEM[nCpa1]:codigo+";"+AEM[nCpa1]:descripcion+";"+...
+				ggsRespuesta = ";EMPL;"+AEM[nCpa1]:codigo+";"+AEM[nCpa1]:descripcion+";"+...
 				AEM[nCpa1]:val1+";"+AEM[nCpa1]:val2+";"+AEM[nCpa1]:flag+";"+...
 				gapA[3]+";"+AEM[nCpa1]:nota+";"+AEM[nCpa1]:b+";"+AEM[nCpa1]:c+";"+...
 				AEM[nCpa1]:d+";"+AEM[nCpa1]:f+";"+AEM[nCpa1]:g+";"+AEM[nCpa1]:m+";"+...
@@ -119,10 +121,10 @@ ELSE IF Upper(gapA[1]) = "LOGIN"
 				IF gapA[3] <> "" THEN
 					IF nDebug = Today() THEN Info("CLAVE="+AEM[nCpa1]:Flagc20)
 					IF AEM[nCpa1]:Flagc20 = "" THEN
-						IF nDebug = Today() THEN Info("Actualiza nuevo pass...","",gapA[1])
-						ggbFlash_n = True; Ejecuta("A",gsCas+gapA[1]+gsCas)
+						IF nDebug = Today() THEN Info("Actualiza nuevo pass...","",ggsRespuesta)
+						ggbFlash_n = True; Ejecuta("A",gsCas+ggsRespuesta+gsCas)
 					ELSE
-						IF AEM[nCpa1]:Flagc20 <> gapA[3] THEN gapA[1] = ""; bCpa1= True	// password ERRONEO
+						IF AEM[nCpa1]:Flagc20 <> gapA[3] THEN ggsRespuesta = "X"; bCpa1= True	// password ERRONEO
 					END
 				END
 
@@ -131,7 +133,7 @@ ELSE IF Upper(gapA[1]) = "LOGIN"
 		END
 	END
 
-	IF gapA[1] = "" THEN
+	IF ggsRespuesta = "" THEN
 		IF nDebug = Today() THEN Info("Lee archivo... catï¿½logo: EMPL")
 		// Lee catï¿½logo(tabla fisica) ...
 		// Vector AEM no esta actualizado ...
@@ -141,20 +143,19 @@ ELSE IF Upper(gapA[1]) = "LOGIN"
 		IF gsBloqueP <> "" THEN
 			FOR EACH STRING sL OF gsBloqueP SEPARATED BY CR
 				IF sL = "" THEN CONTINUE
-				sa is array of ANSI string
-				StringToArray(sL,sa,";")
+				fd1 is array of ANSI string
+				StringToArray(sL,fd1,";")
 
-				IF sa[3] = gapA[2] THEN
-					gapA[1] = sL
+				IF fd1[3] = gapA[2] THEN
+					ggsRespuesta = sL
 					IF gapA[3] <> "" THEN
-						IF sa[11] = "" THEN
-							IF nDebug = Today() THEN Info("Actualiza nuevo pass...","",gapA[1])
-							ggbFlash_n = True; Ejecuta("A",gsCas+gapA[1]+gsCas)
+						IF fd1[11] = "" THEN
+							IF nDebug = Today() THEN Info("Actualiza nuevo pass...","",ggsRespuesta)
+							ggbFlash_n = True; Ejecuta("A",gsCas+ggsRespuesta+gsCas)
 						ELSE
-							IF sa[11] <> gapA[3] THEN gapA[1] = ""; bCpa1= True	// password ERRONEO
+							IF fd1[11] <> gapA[3] THEN ggsRespuesta = "X"; bCpa1= True	// password ERRONEO
 						END
 					END
-
 					BREAK
 				END
 			END
@@ -165,9 +166,8 @@ ELSE IF Upper(gapA[1]) = "LOGIN"
 
 	//IF bCpa1 THEN Error("Pass erroneo...")
 	IF nDebug = Today() THEN
-		IF gapA[1] <> "" THEN Info("enocntro "+gapA[2],"",gapA[1]) ELSE Info("Inexistente "+gapA[2])
+		IF ggsRespuesta <> "" THEN Info("enocntro "+gapA[2],"",ggsRespuesta) ELSE Info("Inexistente "+gapA[2])
 	END
 ELSE
 	  Error(gapA[1]+" es una capa inexistente en "+sCompilaTXT); Close()
 END
-// gapA[1] regresa en variable enviada por BBBB

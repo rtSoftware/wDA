@@ -1,4 +1,4 @@
-//EXTERN ".\zzW\IW220\IW220_ZAL.wl"
+//EXTERN ".\zzW\IW220\IW220_ZALI.wl"
 
 //Ejecuta("XXX_","")  // sin prefijo   "XXX_xxxx"    es codigo base
 // Ejecuta("ZALI","LOGIN")  // sin prefijo   "XXX_xxxx"    es codigo base
@@ -10,8 +10,6 @@
 //            BTN_C --> ABRE  (cancela)
 //          MJES --> IWxxx_ZALI   (muy variado)
 /////////////////////////////////////////////////////////////////////////
-
-
 // nDebug = Today()
 // 		SI: Ejecuta("gapE[1]","*gapA[1]")
 // 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
@@ -21,7 +19,7 @@ EXTERN ".\zzW\Z\DebugEjecuta.wl"
 IF Upper(gapA[1]) NOT IN("LOGIN","SKU","PAGO")  THEN gapA[1] = ""
 IF gapA[1] = "" THEN
   Error("X parametro CAPA aucente/erroneo en "+sCompilaTXT)
-  SWITCH {gestoyEn}..Plane
+  SWITCH {gestoyEn,indWindow}..Plane
     CASE gnCapaLogin: gapA[1] = "LOGIN"
     CASE gnCapaSku: gapA[1] = "SKU"
     CASE gnCapaPago: gapA[1] = "PAGO"
@@ -85,37 +83,40 @@ ELSE IF Upper(gapA[1]) = "PAGO" /////////////////////////////////////////////
     // Genera transaccion ...
     // **********************************************************
     Ejecuta("F","LOG;>>>>>>>>>>>>>>>"+Now()) //LOG("A",">>>>>>>>>>>>>>>"+Now())
-
-    //sEnvia is string = ggsALES+ggsVNXER+ggsVNXE+ggsVNXI+ggsVN
-    sEnvia is string = gsCas+ggsVNXER+gsCas
-
     Ejecuta("F","TEMPO_B") // Asegura (prepara escritura)
 
-      // H I S T O R I C O
-    ggbFlash_m = False; ggbFlash_n = False; Ejecuta("A",sEnvia)
-    //LOG("A",ggsDB+"/"+ggsDB_WS_SP4L+"_"+ggsCia+" (historicos.term1)"+Left(sEnvia,99))
-    Ejecuta("F","LOG;"+ggsDB+"/"+ggsDB_WS_SP4L+"_"+ggsCia+" (historicos.term1)"+Replace(Left(sEnvia,99),";","/"))
+     // H I S T O R I C O
+    sEnvia is string = gsCas+ggsVNXER+gsCas   //ggsALES+ggsVNXER+ggsVNXE+ggsVNXI+ggsVN  Doble encomillado
+    ggbFlash_m = False; ggbFlash_n = False; Ejecuta("A",sEnvia) //* 
+    // L O G
+    sEnvia = Replace(Left(sEnvia,99),";","/"); sEnvia = Replace(sEnvia,gsCas,"") // prepara para log
+    Ejecuta("F","LOG;"+ggsDB+"/"+ggsDB_WS_SP4L+"_"+ggsCia+" (historicos.term1)"+sEnvia)
+
       // R E P O R T E S  (Copia ultimos 30 dias para generacion flash)
-    sEnvia = gsCas+ggsVNXER+gsCas
-    ggbFlash_m = True; ggbFlash_n = False; Ejecuta("A",sEnvia)
-    //LOG("A",ggsDB+"/"+ggsDB_WS_SP4L+" "+ggsCia+"M"+" (reportes.term2)"+Left(sEnvia,99))
-    Ejecuta("F","LOG;"+ggsDB+"/"+ggsDB_WS_SP4L+" "+ggsCia+"M"+" (reportes.term2)"+Replace(Left(sEnvia,99),";","/"))
+    sEnvia = gsCas+ggsVNXER+gsCas // Doble encomillado
+    ggbFlash_m = True; ggbFlash_n = False; Ejecuta("A",sEnvia) //*
+    // L O G
+    sEnvia = Replace(Left(sEnvia,99),";","/"); sEnvia = Replace(sEnvia,gsCas,"") // prepara para log
+    Ejecuta("F","LOG;"+ggsDB+"/"+ggsDB_WS_SP4L+" "+ggsCia+"M"+" (reportes.term2)"+sEnvia)
 
 
       // R E P L I C A
     ggsDBtemp = "HIF"; ggsDB4Temp = "S1" // default
     IF ggsDB_WS_SP4L = "S1" AND ggsDBOri = "HIF" THEN ggsDB4Temp = "S2"
-    //LOG("A",ggsDBtemp+"/"+ggsDB4temp+" "+ggsCia+" (copia seguridad.term3)"+Left(sEnvia,99))
-    Ejecuta("F","LOG;"+ggsDBtemp+"/"+ggsDB4temp+" "+ggsCia+" (copia seguridad.term3)"+Replace(Left(sEnvia,99),";","/"))
-    sEnvia = gsCas+ggsVNXER+gsCas
-    ggbFlash_m = False; ggbFlash_n = False; Ejecuta("A",sEnvia)   // Historico
+    sEnvia = gsCas+ggsVNXER+gsCas // Doble encomillado
+    ggbFlash_m = False; ggbFlash_n = False; Ejecuta("A",sEnvia)   //* (Historico)
+    // L O G
+    sEnvia = Replace(Left(sEnvia,99),";","/"); sEnvia = Replace(sEnvia,gsCas,"") // prepara para log
+    Ejecuta("F","LOG;"+ggsDBtemp+"/"+ggsDB4temp+" "+ggsCia+" (copia seguridad.term3)"+sEnvia)
 
     ggsDBtemp = "HIF"; ggsDB4Temp = "S1" // default
     IF ggsDB_WS_SP4L = "S1" AND ggsDBOri = "HIF" THEN ggsDB4Temp = "S2"
-    //LOG("A",ggsDBtemp+"/"+ggsDB4temp+" "+ggsCia+"M"+" (copia seguridad reportes.term4)"+Left(sEnvia,99))
-    Ejecuta("F","LOG;"+ggsDBtemp+"/"+ggsDB4temp+" "+ggsCia+"M"+" (copia seguridad reportes.term4)"+Replace(Left(sEnvia,99),";","/"))
-    sEnvia = gsCas+ggsVNXER+gsCas
-    ggbFlash_m = True; ggbFlash_n = False; Ejecuta("A",sEnvia)   // Reportes
+    sEnvia = gsCas+ggsVNXER+gsCas // Doble encomillado
+    ggbFlash_m = True; ggbFlash_n = False; Ejecuta("A",sEnvia)   //* (Reportes)
+    // L O G
+    sEnvia = Replace(Left(sEnvia,99),";","/"); sEnvia = Replace(sEnvia,gsCas,"") // prepara para log
+    Ejecuta("F","LOG;"+ggsDBtemp+"/"+ggsDB4temp+" "+ggsCia+"M"+" (copia seguridad reportes.term4)"+sEnvia)
+
 
     ggsVNXER = "" // Asegura nuevas transacciones
     Ejecuta("F","LOG;>>>>>>>>>>>>>>>"+Now())

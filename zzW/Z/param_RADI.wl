@@ -8,24 +8,24 @@
 sCpa1 = "RADIO_1"
 
 // F O R M A
-IF {sCpa1}[1]..Caption = "Option 1" AND ArrayCount(gapA) > 0 THEN
+IF {sCpa1,indControl}[1]..Caption = "Option 1" AND ArrayCount(gapA) > 0 THEN
   //      Elimina Radio Botones actuales
   // (control RADIO debe tener minimo 1 elemento)
   nRAD is int
-  FOR nRAD = RadioButtonCount({sCpa1}) _TO_ 2 STEP -1
-    RadioButtonDelete({sCpa1},nRAD)
+  FOR nRAD = RadioButtonCount({sCpa1,indControl}) _TO_ 2 STEP -1
+    RadioButtonDelete({sCpa1,indControl},nRAD)
   END
 
   // Forma 1er elemento
-  {sCpa1}[1]..Caption = "_nada"
+  {sCpa1,indControl}[1]..Caption = "_nada"
   FOR nRAD = 1 _TO_ ArrayCount(gapA)
     IF Left(Upper(gapA[nRAD]),3) = "RAD" THEN CONTINUE
     IF Left(gapA[nRAD],1) = "*" THEN gapA[nRAD] = Right(gapA[nRAD],Length(gapA[nRAD])-1)
     IF Contains(gapA[nRAD],"~") THEN CONTINUE // param CONCLUYE
-    RadioButtonAdd({sCpa1},gapA[nRAD])
+    RadioButtonAdd({sCpa1,indControl},gapA[nRAD])
   END
 ELSE
-  IF {sCpa1}[1]..Caption = "Option 1" THEN Error("X CHECK (2003041635) parametros aucentes..."); RETURN
+  IF {sCpa1,indControl}[1]..Caption = "Option 1" THEN Error("X CHECK (2003041635) parametros aucentes..."); RETURN
 
   // S E L E C C I O N
   ////////////////////////////////////////////////////////
@@ -36,8 +36,8 @@ ELSE
   //END
   ////////////////////////////////////////////////////////
   // Respuesta ...
-  ggsA = {sCpa1}[{sCpa1}]..Caption; ToClipboard(ggsA); gapA[1] = ggsA
+  ggsA = {sCpa1,indControl}[{sCpa1,indControl}]..Caption; ToClipboard(ggsA); gapA[1] = ggsA
   // Deja limpio el control para ser usado nuevamente...
-  {sCpa1}[1]..Caption = "Option 1" // Importante
+  {sCpa1,indControl}[1]..Caption = "Option 1" // Importante
   //EXTERN ".\zzW\Z\Ejecuta_CONCLUYE.wl"
 END

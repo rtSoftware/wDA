@@ -816,7 +816,7 @@ SWITCH gapA[1]
 		Info("Cambios guardados satisfactoramente ...")
 
 	CASE ~~"RADI"
-		//gnCapa = 2; EXTERN ".\zzW\Z\param_RADI.wl"
+		//gnCapa = 2; Ejecuta(gapA[1])  //EXTERN ".\zzW\Z\param_RADI.wl"
     // *** Cambio configuracion original... Lanzar esta funcion ***
     //  RADIO_kata[1]..Caption = "Option 1"
     //  Ejecuta("RADI","EMPL;INVE;VN;VNXI")
@@ -827,47 +827,47 @@ SWITCH gapA[1]
 		nN is int
 
     // F O R M A
-    IF {sCpa1}[1]..Caption = "Option 1" AND ArrayCount(gapA) > 0 THEN
+    IF {sCpa1,indControl}[1]..Caption = "Option 1" AND ArrayCount(gapA) > 0 THEN
       //      Elimina Radio Botones actuales
       // (control RADIO debe tener minimo 1 elemento)
-      FOR nN = RadioButtonCount({sCpa1}) _TO_ 2 STEP -1
-        RadioButtonDelete({sCpa1},nN)
+      FOR nN = RadioButtonCount({sCpa1,indControl}) _TO_ 2 STEP -1
+        RadioButtonDelete({sCpa1,indControl},nN)
       END
 
       // Forma 1er elemento
-      {sCpa1}[1]..Caption = "_nada"
+      {sCpa1,indControl}[1]..Caption = "_nada"
       FOR nN = 1 _TO_ ArrayCount(gapA)
         IF Left(Upper(gapA[nN]),3) = "RAD" THEN CONTINUE
         IF Left(gapA[nN],1) = "*" THEN gapA[nN] = Right(gapA[nN],Length(gapA[nN])-1)
         IF Contains(gapA[nN],"~") THEN CONTINUE // param CONCLUYE
-        RadioButtonAdd({sCpa1},gapA[nN])
+        RadioButtonAdd({sCpa1,indControl},gapA[nN])
       END
     ELSE
-      IF {sCpa1}[1]..Caption = "Option 1" THEN Error("X CHECK (2003041635) parametros aucentes..."); RETURN
+      IF {sCpa1,indControl}[1]..Caption = "Option 1" THEN Error("X CHECK (2003041635) parametros aucentes..."); RETURN
 
       // S E L E C C I O N
       ////////////////////////////////////////////////////////
       //Ejecuta("ABRE","RADI")
       ////////////////////////////////////////////////////////
       // Asigna a  gsPCata...
-      IF Left({sCpa1}[{sCpa1}]..Caption,1) = "+" THEN
+      IF Left({sCpa1,indControl}[{sCpa1,indControl}]..Caption,1) = "+" THEN
       	IF gsPCata = "" THEN
       		Error("cat�logo BASE aucente ...")
       	ELSE
       		SWITCH	gsPCata
       			CASE "CLIE","EMPL","INVE","PROVE"
-      				IF Right({sCpa1}[{sCpa1}]..Caption,1) = "S" THEN
+      				IF Right({sCpa1,indControl}[{sCpa1,indControl}]..Caption,1) = "S" THEN
       					gsPCata = "VNX"+Left(gsPCata,2)+"S"
       				ELSE
       					gsPCata = "VNX"+Left(gsPCata,2)
       				END
       			CASE "VN"
-      				IF Right({sCpa1}[{sCpa1}]..Caption,1) = "S" THEN gsPCata = "VNS"
+      				IF Right({sCpa1,indControl}[{sCpa1,indControl}]..Caption,1) = "S" THEN gsPCata = "VNS"
       			OTHER CASE
       		END
       	END
       ELSE
-      	gsPCata = {sCpa1}[{sCpa1}]..Caption
+      	gsPCata = {sCpa1,indControl}[{sCpa1,indControl}]..Caption
       	IF Left(gsPCata,1) = "+" THEN
       		Error("cat�logo BASE aucente ...")
       		gsPCata = ""

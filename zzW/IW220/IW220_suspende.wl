@@ -2,13 +2,16 @@
 
 
 
-
+// nDebug = Today()
+// 		SI: Ejecuta("gapE[1]","*gapA[1]")
+// 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
-//#
 
 IF HNbRec(Recibo) > 0 THEN
 	sBque is string
-	FOR EACH Recibo
+	// Puede usar con script TXT
+	HReadFirst(Recibo)
+	WHILE HOut(Recibo) = False
 		sBque = Recibo.mesa+";"+...
 		Recibo.codigo+";"+...
 		Recibo.descripcion+";"+...
@@ -25,6 +28,8 @@ IF HNbRec(Recibo) > 0 THEN
 		Recibo.presentacion+";"+...
 		Recibo.caducidad+";"+...
 		Recibo.imagen+CR
+
+		HReadNext(Recibo)
 	END
 	fSaveText(ggsSAVE+[fSep]+Right(Now(),5)+"rbo.txt",sBque)
 END

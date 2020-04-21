@@ -25,36 +25,36 @@ EXTERN ".\zzW\Z\DebugEjecuta.wl"
 sCpa1 = "COMBO_5"
 
 // F O R M A
-IF NOT ListCount({sCpa1}) THEN
+IF NOT ListCount({sCpa1,indControl}) THEN
   nN is int
   FOR nN = 1 _TO_ ArrayCount(gapA)
     IF Left(Upper(gapA[nN]),3) IN ("CBO","COM") THEN CONTINUE
     IF Left(gapA[nN],1) = "*" THEN gapA[nN] = Right(gapA[nN],Length(gapA[nN])-1)
     IF Contains(gapA[nN],"~") THEN CONTINUE // param CONCLUYE
-    ListAdd({sCpa1},gapA[nN])
+    ListAdd({sCpa1,indControl},gapA[nN])
   END
   // Distingue si la lista fue formada con PARAMETROS vs CODIGO
-  IF ListCount({sCpa1}) > 1 THEN ListInsert(COMBO_5,"_nada",1)
+  IF ListCount({sCpa1,indControl}) > 1 THEN ListInsert(COMBO_5,"_nada",1)
 
   ////////////////////////////////////////////////////////////////////////
   // Escriba aqui CODIGO para formar Lista si no invoca con PARAMETROS...
   //                        Ejecuta("CBOS")
   ////////////////////////////////////////////////////////////////////////
-  //ListAdd({sCpa1},"Opcion 1")
-  //ListAdd({sCpa1},"Opcion 2")
+  //ListAdd({sCpa1,indControl},"Opcion 1")
+  //ListAdd({sCpa1,indControl},"Opcion 2")
 
-  //ListAdd({sCpa1},"Opcion n")
+  //ListAdd({sCpa1,indControl},"Opcion n")
 
 
   // Cuidado !
-  //ListDisplay({sCpa1})  // Nunca porque es elaborada en el aire
+  //ListDisplay({sCpa1,indControl})  // Nunca porque es elaborada en el aire
   RETURN // >>>>>>>>>>>>>>>>>>>>>>>
 END
 
 
 // Asegura
-IF ListCount({sCpa1}) < 1 THEN RETURN
-IF {sCpa1} < 1 THEN RETURN
+IF ListCount({sCpa1,indControl}) < 1 THEN RETURN
+IF {sCpa1,indControl} < 1 THEN RETURN
 
 
 
@@ -68,9 +68,9 @@ IF {sCpa1} < 1 THEN RETURN
 //END
 ////////////////////////////////////////////////////////
 // Respuesta ...
-ggsA = {sCpa1}[{sCpa1}]; ToClipboard(ggsA); gapA[1] = ggsA
+ggsA = {sCpa1,indControl}[{sCpa1,indControl}]; ToClipboard(ggsA); gapA[1] = ggsA
 // Deja limpio el control para ser usado nuevamente...
-ListDeleteAll({sCpa1})  // Limpia contenido del control
+ListDeleteAll({sCpa1,indControl})  // Limpia contenido del control
 
 // Funcionalidad extendida (solo codigo, imposible en modo parametros)
 SWITCH ggsA
