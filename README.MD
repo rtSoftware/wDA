@@ -1,5 +1,7 @@
 # Repositorio wDA
 Motor, Libreria y scrpts de Dash Punto De Venta
+![motor+lib+scrps = wDA](https://github.com/rtSoftware/wDA/blob/master/IMAGENES/gitREADME1.jpg)
+Scrip continen codigo libre interpretado por MOTOR+LIB que desplegaran una solucion electronica en su escritorio
 ![imagein ilustrativa script](https://github.com/rtSoftware/wDA/blob/master/IMAGENES/metodos2.jpg)
 
 
