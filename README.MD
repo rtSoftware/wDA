@@ -1,4 +1,5 @@
 # Repositorio wDA
+Motor, Libreria y scrpts de Dash Punto De Venta
 
 
 # Requerimientos
