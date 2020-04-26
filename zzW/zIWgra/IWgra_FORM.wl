@@ -1,8 +1,7 @@
-//EXTERN ".\zzW\IWgra_ZALI.wl
+//EXTERN ".\zzW\IWgra_FORM.wl
 
 
 
-//Ejecuta("ZALI"[,"tarea"])
 /////////////////////////////////////////////////////////////////////////
 // Flujo:
 //
@@ -12,14 +11,24 @@
 // 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
 
-SWITCH gapA[1]
-  CASE "CONCLUYE_SELECCION"
-
-	OTHER CASE
-		SWITCH {gestoyEn,indWindow}..Plane
-			CASE 1
-			OTHER CASE: Error(gapA[1]+"<-- Tarea no definido ("+gestoyEn+" - 327463) metodo: ZALI parametros: "+gapA[2])
+SWITCH Left(Upper(gapA[1]))
+	CASE "CAPA"
+		ggnY = Val(gapA[1]); IF ggnY = 0 THEN ggnY = 1
+		IF ggnY > 4 THEN ggnY = 4	// limite
+		ggsA = NumToString(ggnY); ggnX = 0
+		sErie is string
+		FOR EACH STRING sL OF gapA[1] SEPARATED BY CR
+			IF sL = "" THEN CONTINUE
+			sa is array of ANSI string
+			S2A(sL,sa)
+			ggnX++; sErie = "garrVal"+ggsA+ggnX
+			FOR i = 1 TO ArrayCount(sa)
+				ArrayAdd({sErie,indVariable},sa[i])
+			END
+			IF ggnX = ggnY THEN BREAK
 		END
+
+	OTHER CASE: Error(gapA[1]+" es una capa inexistente en "+sCompilaTXT); Close()
 END
 
 

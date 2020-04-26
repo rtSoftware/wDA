@@ -8,7 +8,7 @@ SWITCH sCpa1
 
 
     //Widget
-    sCpa1 = "WIN_R.DASH_MAIN" // <<-----------------------
+    sCpa1 = ggsDash_Nombre // <<-----------------------
     FOR nCpa1 = 1 TO DashCount({sCpa1,indControl},toTotal)
       IF {sCpa1,indControl}[nCpa1]..Name = "IW_grafica" THEN
         // E X I S T E
@@ -58,7 +58,7 @@ SWITCH sCpa1
     //IW_recibo.Ejecuta("RBO_ABRE","LOGIN")
     //IW_captura..Visible = False
   CASE ~~"TABLETA" //0221
-Info("en remodelacion modo: TABLETA")  
+Info("en remodelacion modo: TABLETA")
 //    IF COMBO_productos..Visible = True THEN
 //      INIWrite("cfg","Tableta_YN","N",ggsIni)
 //      COMBO_productos..Visible = False

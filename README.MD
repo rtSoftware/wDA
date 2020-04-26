@@ -4,7 +4,11 @@ Motor, Libreria y scrpts de Dash Punto De Venta
 Scrip continen codigo libre manejados por MOTOR+LIB que desplegaran una solucion electronica en su escritorio
 ![imagein ilustrativa script](https://github.com/rtSoftware/wDA/blob/master/IMAGENES/gitREADME2.jpg)
 CLASES integradas en un SCRIP por METODO cuyo flujo esta establecido en el mismo scrip
+<<<<<<< HEAD
 ![imagein CLASES](https://github.com/rtSoftware/wDA/blob/master/IMAGENES/gitREADME3.jpg)
+=======
+![imagein CLASES mas importantes](https://github.com/rtSoftware/wDA/blob/master/IMAGENES/gitREADME3.jpg)
+>>>>>>> 70d61e85594a6cae26920aa0515d5d04f16989c5
 
 
 # Requerimientos
@@ -44,4 +48,17 @@ Capacitando a su equipo de desarrollo quien debe contar con conocimientos MINIMO
 >Training basic skils emploeys of your own
 
 
-# Historia Versión
+# **Historia Versión**
+
+# 200426
+> Ceado metodo: Q.Define(CIA:XX,DB:FIC,CX:F) que se llama al inicio de la APL cuando no existe INI
+> Se remodelo IWgra (componente Graficas)
+# 200425
+>Corregido formacion gapA en Ejecuta_INICIO de cadena unica Ejecuta("ABRE;SKU")
+# 200424
+>Centralizado anlisis cambios TEMPORALES Cia, Drive(DB) y conexion(DB4) en
+[WIN.ABRE]>Ejecuta_INICIO
+>Eliminacion procesos param_CHEC, param_COMB y param_RADI
+>Creacion METODO: CHEC, COMB y RADI
+# 200423
+>Normalizacion metodo ZALI

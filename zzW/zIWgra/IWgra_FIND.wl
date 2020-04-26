@@ -1,25 +1,30 @@
-//EXTERN ".\zzW\IWgra_ZALI.wl
+//EXTERN ".\zzW\IWgra_FIND.wl
 
 
 
-//Ejecuta("ZALI"[,"tarea"])
 /////////////////////////////////////////////////////////////////////////
 // Flujo:
 //
+/////////////////////////////////////////////////////////////////////////
+// Ejecuta("FIND")
+// Ejecuta("FIND","KATA")
+// Ejecuta("FIND","EMPL;DB:FIC,DB4=F,FLASH:N")
+/////////////////////////////////////////////////////////////////////////
+// Flujo:
+//
+// * generalmente independiete de las capas
 /////////////////////////////////////////////////////////////////////////
 // nDebug = Today()
 // 		SI: Ejecuta("gapE[1]","*gapA[1]")
 // 		SI: INIRead("cfg","Debug","",ggsIni) = sCompilaTXT
 EXTERN ".\zzW\Z\DebugEjecuta.wl"
 
-SWITCH gapA[1]
-  CASE "CONCLUYE_SELECCION"
+ggsRespuesta = ""
 
-	OTHER CASE
-		SWITCH {gestoyEn,indWindow}..Plane
-			CASE 1
-			OTHER CASE: Error(gapA[1]+"<-- Tarea no definido ("+gestoyEn+" - 327463) metodo: ZALI parametros: "+gapA[2])
-		END
+SWITCH Left(Upper(gapA[1]))
+	CASE "CAPA"
+
+	OTHER CASE: Error(gapA[1]+" es una capa inexistente en "+sCompilaTXT); Close()
 END
 
 

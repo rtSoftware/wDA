@@ -65,6 +65,7 @@ SWITCH gapA[1]
 		{sCTL}..Caption = ggsCia+" / "+ggsDB+" / "+ggsDB_WS_SP4L
 
     // Intranet ...
+    Error("Remodelar 4222005")
     IF ggsDB_WS_SP4L = "I" THEN
         sIntraNet is string = fSelectDir(fCurrentDir(), "Directorios...", "Seleccione...")
         IF sIntraNet = "" THEN
