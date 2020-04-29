@@ -1,0 +1,10 @@
+CASE "TTTTT"
+  //Ejecuta("T","AVIS;Pendiente hacer scrip MAIN_ABRE")
+  //Ejecuta("T","RADI;1;2;3;4)
+  sTareaT,sParamT is string
+  sTareaT = gapA[1]
+  FOR i = 2 _TO_ ArrayCount(gapA)
+    sParamT = sParamT + gapA[i] + ";"
+  END
+  IF Right(sParamT,1) = ";" THEN sParamT = Left(sParamT,Length(sParamT)-1)
+  Open(WIN_T,sTareaT,sParamT)
